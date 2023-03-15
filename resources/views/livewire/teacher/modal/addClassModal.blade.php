@@ -11,13 +11,13 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="" class="form-label">Class Name</label>
-                        <select wire:model="class_id" id="" class="form-select">
+                        <select wire:model="school_class_id" id="" class="form-select">
                             <option value="">-- Select Class --</option>
                             @foreach ($classes as $class)
                                 <option value="{{ $class->id }}">{{ strtoupper($class->course).'-'.strtoupper($class->year).strtoupper($class->section) }}</option>
                             @endforeach
                         </select>
-                        @error('class_id') <span class="text-danger">{{ $message }}</span> @enderror
+                        @error('school_class_id') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Subject</label>

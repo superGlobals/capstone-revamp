@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\FrontPageController;
+use App\Http\Controllers\Logout;
 use App\Http\Livewire\Admin\Class\ClassComponent;
 use App\Http\Livewire\Admin\Student\CreateStudentComponent;
 use App\Http\Livewire\Admin\Student\EditStudentComponent;
@@ -13,9 +13,13 @@ use App\Http\Livewire\Admin\Teacher\EditComponent;
 use App\Http\Livewire\Admin\Teacher\IndexComponent;
 use App\Http\Livewire\Authentication\LoginComponent;
 use App\Http\Livewire\Student\StudentRegisterComponent;
+use App\Http\Livewire\Teacher\Quiz\CreateQuizCategory;
+use App\Http\Livewire\Teacher\Quiz\QuizIndexCategory;
 use App\Http\Livewire\Teacher\TeacherIndexComponent;
 use App\Http\Livewire\Teacher\TeacherMyClassComponent;
+use App\Http\Livewire\Teacher\TeacherMyStudentsComponent;
 use App\Http\Livewire\Teacher\TeacherRegisterComponent;
+use App\Http\Livewire\Teacher\TeacherSingleClass;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +74,18 @@ Route::prefix('admin')->name('student.')->group(function() {
 /**
  * Teacher Route
  */
-Route::get('/teacher', TeacherIndexComponent::class)->name('index.teacher');
-Route::get('/teacher/my-class', TeacherMyClassComponent::class)->name('teacher.my-class');
+Route::middleware('teacherAuth')->group(function() {
+    Route::get('/teacher', TeacherIndexComponent::class)->name('index.teacher');
+    Route::get('/teacher/my-class', TeacherMyClassComponent::class)->name('teacher.my-class');
+    Route::get('/teacher/{id}/my-students', TeacherMyStudentsComponent::class)->name('teacher.my-students');
+
+    Route::get('/teacher/quiz', QuizIndexCategory::class)->name('index.quiz');
+    Route::get('/teacher/quiz/add', CreateQuizCategory::class)->name('teacher.quiz');
+
+    
+
+    Route::get('/teacher/logout', [Logout::class, 'logout'])->name('teacher.logout');
+});
 
 
 

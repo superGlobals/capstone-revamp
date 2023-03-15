@@ -9,6 +9,9 @@
                         Login
                     </h4>
                 </div>
+                {{-- @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror --}}
                 <div class="card-body">
                     <form wire:submit.prevent="login">
                         <div class="mb-3">

@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
@@ -42,7 +43,16 @@
 
     @include('livewire.layouts.teacher-inc.header')
 
-    @include('livewire.layouts.teacher-inc.sidebar')
+    @if (request()->is('teacher/*/my-students'))
+    
+        @include('livewire.layouts.teacher-inc.my-students-sidebar')
+        
+    @else
+        
+        @include('livewire.layouts.teacher-inc.sidebar')
+
+    @endif
+
 
     <main class="main" id="main">
         {{ $slot }}
@@ -82,6 +92,19 @@
 
         window.addEventListener('success', event => {
             toastr.success(event.detail.message);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            toastr.options = {
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }  
+        });
+
+        window.addEventListener('error', event => {
+            toastr.error(event.detail.message);
         });
     </script>
 
